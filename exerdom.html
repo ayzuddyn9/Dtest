@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<h1 id="mainHeading">Welcome</h1>
+	<p id="myParagraft" class="coloredText">This is the original text</p>
+	<p id="coloredText">This text will change color.</p>
+	<img id="myImage" src="image1.jpg" alt="First Image" width="200">
+	<div id="myListing"></div>
+	<script>
+		document.body.style.backgroundColor = "red"
+		document.getElementById("coloredText").style.color = "white"
+
+		let p1 = document.getElementById("myParagraft")
+		p1.innerHTML = `The Text has been changed!`
+
+		document.querySelector(`img[src="image1.jpg"]`).src = "weird.jpg"
+		
+		const newUnList = document.createElement("ul")
+
+		const listItem1 = document.createElement('li')
+		const listItem2 = document.createElement('li')
+		const listItem3 = document.createElement('li')
+
+		listItem1.textContent = 'item1'
+		listItem2.textContent = 'item2'
+		listItem3.textContent = 'item3'
+
+		newUnList.appendChild(listItem1)
+		newUnList.appendChild(listItem2)
+		newUnList.appendChild(listItem3)
+
+		document.getElementById('myListing').appendChild(newUnList)
+		newUnList.setAttribute("id", "myList")
+
+		let newSize = document.getElementById("mainHeading")
+			newSize.style.fontSize = "120px"
+	</script>
+</body>
+</html>

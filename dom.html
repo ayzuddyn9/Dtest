@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title></title>
+</head>
+<body>
+	<h1>SquareFeet</h1>
+	<p id="sqft"></p>
+	<h1>Miles Calculator</h1>
+	<p id="pmiles"></p>
+	<h1>Calculator</h1>
+	<p id="calcu"></p>
+
+	<script>
+		let pHeight = parseInt(prompt("what is the height:"))
+
+		let pLenght = parseInt(prompt("what is the lenght:"))
+
+		let pBreadth = parseInt(prompt("what is the breadth:"))
+
+		alert(`the square area is ${pHeight * pLenght * pBreadth} sqft`)
+
+
+		
+		const miles = 0.621371
+		let kiloMeter = parseInt(prompt("How many kilometers do u need to convert to miles:"))
+
+		alert(`${kiloMeter * miles } in miles`)
+
+
+	
+		let num1 = parseInt(prompt("what is the first number:"))
+		let num2 = parseInt(prompt("what is the second number:"))
+
+		alert(`addition : ${num1 + num2}\nminus : ${num1 - num2}\ntimes : ${num1 * num2}\nsubtration : ${num1 / num2}`)
+
+
+		let sqft = pHeight * pLenght * pBreadth
+		document.getElementById("sqft").innerHTML = `the square area is ${sqft} sqft`
+		
+	</script>
+</body>
+</html>

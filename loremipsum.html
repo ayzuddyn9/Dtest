@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<style>
+			li {
+				list-style-type: none;
+			}
+
+			.seasons::before {
+				content: "\2666";
+			}
+
+			.winter::before {
+				content: "\2744";
+				color: blue;
+			}
+
+			.spring::before {
+				content: "\1F343";
+			}
+
+			.summer::before {
+				content: "\2600";
+				color: orange;
+			}
+
+			.autumn::before {
+				content: "\1F342";
+			}
+
+		</style>
+	</head>
+	<body>
+		<h1>Seasons</h1>
+		<ol>
+			<li class="seasons">Winter
+				<ol>
+					<li class="winter">December</li>
+					<li class="winter">January</li>
+					<li class="winter">February</li>
+				</ol>
+			</li>
+			<li class="seasons">Spring
+				<ol>
+					<li class="spring">March</li>
+					<li class="spring">April</li>
+					<li class="spring">May</li>
+				</ol>
+			</li>
+			<li class="seasons">Summer
+				<ol>
+					<li class="summer">June</li>
+					<li class="summer">July</li>
+					<li class="summer">August</li>
+				</ol>
+			</li>
+			<li class="seasons">Autumn
+				<ol>
+					<li class="autumn">September</li>
+					<li class="autumn">October</li>
+					<li class="autumn">November</li>
+				</ol>
+			</li>
+		</ol>
+	</body>
+</html>

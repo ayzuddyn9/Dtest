@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guild Member List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Reset margins and paddings */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            text-align: center;
+            margin: 10px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Heading style */
+        h1 {
+            color: yellowgreen;
+        }
+
+        /* Container that holds all elements */
+        #container {
+            padding: 6px;
+            border: 3px solid yellowgreen;
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            background: #83f7cd;
+        }
+
+        /* Styling the list */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Individual list item (each guild member) */
+        li {
+            background: white;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Input fields */
+        input, select {
+            padding: 3px;
+            width: 95%;
+            height: 26px;
+            border: 1px solid yellowgreen;
+            border-radius: 6px;
+            margin: 3px auto;
+        }
+
+        /* Buttons styling */
+        .add-button, .search-button {
+            padding: 8px 12px;
+            background: #12543c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+
+        /* Button hover effect */
+        .add-button:hover, .search-button:hover {
+            background: #218838;
+        }
+
+        /* Remove and edit buttons */
+        .remove-btn, .edit-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: yellowgreen;
+            font-size: 16px;
+            display: block;
+            margin-block: 0;
+        }
+
+        /* Online status styling */
+        .online {
+            border: 2px solid green;
+            background-color: #d4edda;
+        }
+
+        /* Rank-based color coding */
+        .rank-peasant {
+            color: #0070dd;
+        }
+
+        .rank-knight {
+            color: #a335ee;
+        }
+
+        .rank-officer {
+            color: #ff8000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guild Member List</h1>
+    <div id="container">
+        <ul id="memberList"></ul>
+
+        <!-- Member input fields -->
+        <label for="memberInput">Guild Member</label>
+        <input type="text" placeholder="Enter a User Id" id="memberInput">
+        <input type="text" placeholder="Enter a Class" id="classInput">
+        <input type="text" placeholder="Enter a Level" id="levelInput">
+
+        <!-- Rank selection dropdown -->
+        <label for="rankInput">Rank</label>
+        <select id="rankInput">
+            <option value="">Please Select</option>
+            <option value="peasant">Peasant</option>
+            <option value="knight">Knight</option>
+            <option value="officer">Officer</option>
+        </select>
+
+        <!-- Add and search buttons -->
+        <button class="add-button" onclick="addGuildMember()">Add Member</button>
+        <input type="text" placeholder="Search for.." id="searchInput">
+        <button class="search-button" onclick="searchMember()">Search</button>
+    </div>
+
+    <script>
+        let guild = []; // Array to store guild members
+
+        // Function to render guild members
+        function renderGuildMember(searchTxt = "") {
+            saveGuildToLocalStorage(); // Save changes to local storage
+            const memberList = document.getElementById("memberList");
+            memberList.innerHTML = ""; // Clear list before re-rendering
+
+            // Filter members based on search input
+            let guildList = searchTxt !== "" ? 
+                guild.filter(member => 
+                    member.ID.toLowerCase().includes(searchTxt) ||
+                    member.class.toLowerCase().includes(searchTxt) ||
+                    member.level.toString().includes(searchTxt)) 
+                : guild;
+
+            // Loop through guild members and create list items
+            guildList.forEach((member, index) => {
+                const li = document.createElement("li");
+
+                // Apply rank-specific styling
+                if (member.rank === "officer") li.classList.add("rank-officer");
+                else if (member.rank === "knight") li.classList.add("rank-knight");
+                else if (member.rank === "peasant") li.classList.add("rank-peasant");
+
+                // Display member details
+                const textContainer = document.createElement("span");
+                textContainer.textContent = `ID: ${member.ID} Class: ${member.class} Level: ${member.level}`;
+
+                // Buttons container
+                const buttonContainer = document.createElement("div");
+                buttonContainer.style.display = "flex";
+                buttonContainer.style.gap = "10px";
+
+                // Edit button
+                const editBtn = document.createElement("button");
+                editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+                editBtn.classList.add("edit-btn");
+                editBtn.title = "Edit member details";
+                editBtn.onclick = () => editMember(index);
+
+                // Remove button
+                const removeBtn = document.createElement("button");
+                removeBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                removeBtn.classList.add("remove-btn");
+                removeBtn.title = "Remove member from the guild";
+                removeBtn.onclick = () => removeMember(index);
+
+                // Append buttons and member details
+                buttonContainer.appendChild(editBtn);
+                buttonContainer.appendChild(removeBtn);
+                li.appendChild(textContainer);
+                li.appendChild(buttonContainer);
+
+                // Toggle online status when clicked
+                if (member.online) li.classList.add("online");
+                li.onclick = () => toggleOnline(member);
+
+                memberList.appendChild(li);
+            });
+        }
+
+        // Function to add a new guild member
+        function addGuildMember() {
+            const member = {
+                ID: document.getElementById("memberInput").value.trim(),
+                class: document.getElementById("classInput").value.trim(),
+                level: parseInt(document.getElementById("levelInput").value),
+                rank: document.getElementById("rankInput").value,
+                online: false
+            };
+
+            if (member.ID && member.class && member.level) {
+                guild.push(member);
+                renderGuildMember();
+            } else {
+                alert("Please enter valid details!");
+            }
+        }
+
+        // Remove member
+        function removeMember(index) {
+            guild.splice(index, 1);
+            saveGuildToLocalStorage();
+            renderGuildMember();
+        }
+
+        // Edit member details
+        function editMember(index) {
+            let newID = prompt("Enter new ID:", guild[index].ID);
+            if (newID) guild[index].ID = newID.trim();
+            renderGuildMember();
+        }
+
+        // Toggle online status
+        function toggleOnline(member) {
+            member.online = !member.online;
+            renderGuildMember();
+        }
+
+        // Save to local storage
+        function saveGuildToLocalStorage() {
+            localStorage.setItem("guild", JSON.stringify(guild));
+        }
+
+        // Load from local storage
+        function loadGuildFromLocalStorage() {
+            guild = JSON.parse(localStorage.getItem("guild")) || [];
+        }
+
+        loadGuildFromLocalStorage();
+        renderGuildMember();
+    </script>
+</body>
+</html>

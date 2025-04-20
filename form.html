@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			text-align: center;
+			background-color: orangered;
+		}
+
+		div .form {
+			width: 70%;
+			background: lightgrey;
+			margin: 10px auto;
+			padding: 10px;
+			
+		}
+
+		form	{
+			display: inline-block;
+		}
+
+		input[type="text"], input[type="password"] {
+			text-align: center;
+			width: 93%;
+			margin: 10px;
+			padding: 10px;
+			overflow: hidden;
+		}
+
+		input[type="submit"] {
+			width: 99%;
+			padding: 10px;
+			margin: 10px;
+			background-color: #5DB13B ;
+			border: none;
+			border-bottom: darkgreen;
+			overflow: hidden;
+		}
+
+		a {
+			font: arial;
+
+		}
+
+		div .ol {
+			display: inline-block;
+		}
+
+		div .fb, .tt {
+			
+			width: 15%;
+			height: 60px;
+		}
+
+		div .fb {
+			background-color: darkblue;
+			float: left;
+			margin-left: 30%;
+		}
+
+		div .tt {
+			background-color: teal;
+			float: right;
+			margin-right: 30%;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		
+		<form>
+			<div class="form">
+				<h1>Member Login</h1>
+				<label for="userName">
+					<input type="text" id="userName" name="userName" placeholder="Username" />
+				</label>
+				<label for="pass">
+					<input type="password" id="pass" name="password" placeholder="Password"/>
+				</label>
+				<label>
+					<input type="submit" id="login" value="Login">
+				</label>
+
+				<a href="_blank">Forget Password</a>
+			</div>
+		</form>
+	</div>
+	<p>... or log in with:</p>
+	<div class="ol">
+		<a href="#" class="fa fa-facebook fb">Facebook</a>
+		<a href="#" class="fa fa-twitter tt">Twitter</a>
+	</div>
+</body>
+</html>

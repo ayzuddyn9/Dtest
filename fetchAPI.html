@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Fetch Example</title>
+  <style>
+    /* General body styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 20px;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    /* Header styling */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Button styling */
+    #fetchButton {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #fetchButton:hover {
+      background-color: #0056b3;
+    }
+
+    /* Output styling */
+    #output {
+        color: #555;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap; /* Preserve formatting */
+      overflow-x: auto; /* Add horizontal scrolling for long lines */
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    #outputTest {
+        color: #555;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap; /* Preserve formatting */
+      overflow-x: auto; /* Add horizontal scrolling for long lines */
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Simple Fetch Example</h1>
+  <button id="fetchButton" onclick="clickFetchButton()">Fetch Data</button>
+  <p id="output"></p>
+  <p id="outputTest"></p>
+
+  <script>
+
+
+    // const data = {
+    //     "userId": 1,
+    //     "id": 1,
+    //     "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    //     "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+    //   }
+    //   data.title
+    //   data["title"]
+
+    function fetchData(){
+
+
+      // try{
+      //    fetch("https://jsonplaceholder.typicode.com/posts/1").then(
+      //   function(response){
+      //     console.log("response", response)
+
+      //     if(response.ok === false){
+      //       throw new Error("Network response was not ok: " + response.status);
+      //     }
+
+      //     return response.json()
+      //   }
+      // ).then(function(data){
+      //   console.log("data", data)
+      //   document.getElementById('output').textContent = data["title"]
+      // }
+      // )
+      // }catch{
+
+      // }
+
+      fetch("https://jsonplaceholder.typicode.com/posts/4").then(
+        function(response){
+          console.log("response", response)
+
+          if(response.ok === false){
+            throw new Error("Network response was not ok: " + response.status);
+          }
+
+          return response.json()
+        }
+      ).then(function(data){
+        console.log("data", data)
+        document.getElementById('output').textContent = data["title"]
+      }
+      ).catch(function(error){
+        document.getElementById('output').textContent = "Error: " + error.message;
+      })
+
+
+      fetch("https://jsonplaceholder.typicode.com/posts/1519198198198198").then(
+        function(response){
+          console.log("responseTest", response)
+          if(!response.ok){
+            throw new Error("There is no id " + response.status + response.ok)
+          }
+          return response.json()
+        }
+        ).then(function(data){
+          console.log("dataTest", data)
+          document.getElementById('outputTest').textContent = data.id
+        }).catch(function(error){
+          document.getElementById('outputTest').textContent = "WARNING: " + error.message
+        })
+      }
+
+
+
+
+
+    function clickFetchButton(){
+      fetchData();
+    }
+   
+  </script>
+</body>
+</html>
+

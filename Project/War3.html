@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Fundamentals Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin: auto;
+        }
+        .question {
+            margin: 15px 0;
+        }
+        .hidden {
+            display: none;
+            color: green;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Google Cloud Fundamentals Quiz</h2>
+        
+        <div class="question">
+            <p>1. What is the default networking model used in Google Cloud?</p>
+            <label><input type="radio" name="q1" value="correct"> Virtual Private Cloud (VPC)</label><br>
+            <label><input type="radio" name="q1" value="wrong"> Subnet-based Cloud</label><br>
+            <label><input type="radio" name="q1" value="wrong"> Private Cloud Infrastructure</label>
+            <p class="hidden">Correct answer: Virtual Private Cloud (VPC)</p>
+        </div>
+        
+        <div class="question">
+            <p>2. True or False: Google Cloud offers a free tier with limited resources.</p>
+            <label><input type="radio" name="q2" value="correct"> True</label><br>
+            <label><input type="radio" name="q2" value="wrong"> False</label>
+            <p class="hidden">Correct answer: True</p>
+        </div>
+        
+        <button onclick="submitQuiz()">Submit</button>
+    </div>
+
+    <script>
+        function submitQuiz() {
+            document.querySelectorAll('.hidden').forEach(answer => {
+                answer.style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		
+	</title>
+	<style>
+
+		* {
+            margin: 0;
+            padding: 0;
+        }
+		body {
+            font-family: Arial, sans-serif;
+            background:#F3F3E0;
+            text-align: center;
+            margin: 10px;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #C6E7FF;
+        }
+
+		#container {
+            border:3px solid #4CC9FE;
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            background: #133E87;
+        }
+
+        input {
+            padding: 3px;
+            width: 95%;
+            height: 20px;
+            border-radius: 6px;
+            margin: 3px auto;
+            border:1px solid #0118D8;
+        }
+
+        .search-button {
+            padding: 8px 12px;
+            background: #60B5FF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .search-button:hover {
+            background: #AFDDFF;
+        }
+	</style>
+</head>
+<body>
+	<div id="container">
+		<h1>Random Pic</h1>
+		<button class="search-button" onclick="search()">Search</button>
+        <div id="imageCon">
+            
+        </div>
+	</div>
+	<script>
+		function search(){
+            const accessKey = 'gAFGzNK7-rszFx7Oo4prWI0S_1yPoj977FYDvn5GVaY';
+            const url = `https://api.unsplash.com/photos/random?client_id=${accessKey}`;
+            const container = document.getElementById("imageCon")
+
+
+			fetch(url)
+			.then(response => {
+                return response.json()
+            })
+			.then(data => {
+                const imageUrl = data.urls["small"]
+                container.innerHTML = `<img src="${imageUrl}"">`
+            })
+			.catch(error => {
+                container.innerHTML = `<h1>Sorry No Image at the moment. Please try again later!!!</h1>`
+            })
+		}
+	</script>
+</body>
+</html>

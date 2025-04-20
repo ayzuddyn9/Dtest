@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Information App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: calc(100% - 22px);
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .info-section {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>City Information App</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button id="searchButton">Search</button>
+
+    <div id="result">
+      <div id="weatherInfo" class="info-section"></div>
+      <div id="cityDescription" class="info-section"></div>
+      <div id="extraInfo" class="info-section"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('searchButton').addEventListener('click', () => {
+      const city = document.getElementById('cityInput').value.trim();
+      if (!city) {
+        alert('Please enter a city name.');
+        return;
+      }
+
+      // Clear previous results
+      document.getElementById('weatherInfo').innerHTML = '';
+      document.getElementById('cityDescription').innerHTML = '';
+      document.getElementById('extraInfo').innerHTML = '';
+
+      // Fetch weather data
+      fetchWeather(city);
+
+      // Fetch city description
+      fetchCityDescription(city);
+
+      // Fetch extra info (example: image from Pexels)
+      fetchExtraInfo(city);
+    });
+
+    // Function to fetch weather data from OpenWeather API
+    function fetchWeather(city) {
+      const apiKey = '29b86fc3f8063aac44990b253ad944c5'; // Replace with your OpenWeather API key
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) throw new Error('City not found');
+          return response.json();
+        })
+        .then(data => {
+          const weatherHtml = `
+            <h2>Weather in ${city}</h2>
+            <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+            <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+            <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+          `;
+          document.getElementById('weatherInfo').innerHTML = weatherHtml;
+        })
+        .catch(error => {
+          document.getElementById('weatherInfo').innerHTML = `<p>Error fetching weather: ${error.message}</p>`;
+        });
+    }
+
+    // Function to fetch city description from Wikipedia API
+    function fetchCityDescription(city) {
+      const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(city)}`;
+
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) throw new Error('City description not found');
+          return response.json();
+        })
+        .then(data => {
+          const descriptionHtml = `
+            <h2>About ${city}</h2>
+            <p>${data.extract || 'No description available.'}</p>
+          `;
+          document.getElementById('cityDescription').innerHTML = descriptionHtml;
+        })
+        .catch(error => {
+          document.getElementById('cityDescription').innerHTML = `<p>Error fetching description: ${error.message}</p>`;
+        });
+    }
+
+    // Function to fetch extra info (example: image from Pexels)
+    function fetchExtraInfo(city) {
+      const apiKey = '5ruZoMUhwvSWkZ710ilgbO1LqL3mmAkIMmrUKEIkFeWoLrpFs5mc3kFR'; // Replace with your Pexels API key
+      const apiUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(city)}&per_page=1`;
+
+      fetch(apiUrl, {
+        headers: {
+          Authorization: apiKey // Pexels requires the API key in the Authorization header
+        }
+      })
+        .then(response => {
+          if (!response.ok) throw new Error('Image not found');
+          return response.json();
+        })
+        .then(data => {
+          if (data.photos && data.photos.length > 0) {
+            const imageUrl = data.photos[0].src.medium; // Medium-sized image
+            const extraInfoHtml = `
+              <h2>City Image</h2>
+              <img src="${imageUrl}" alt="${city}" style="max-width: 100%; border-radius: 5px;">
+            `;
+            document.getElementById('extraInfo').innerHTML = extraInfoHtml;
+          } else {
+            document.getElementById('extraInfo').innerHTML = `<p>No image available for ${city}.</p>`;
+          }
+        })
+        .catch(error => {
+          document.getElementById('extraInfo').innerHTML = `<p>Error fetching image: ${error.message}</p>`;
+        });
+    }
+  </script>
+</body>
+</html>

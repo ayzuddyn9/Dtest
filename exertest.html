@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #container {
+            background: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            padding: 8px;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block;
+            margin: 10px auto;
+        }
+        .add-button {
+            padding: 8px 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .add-button:hover {
+            background: #218838;
+        }
+        .remove-btn {
+            padding: 8px 12px;
+            background: darkred;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .remove-btn:hover {
+            background: #c82333;
+        }
+        .edit-btn {
+            padding: 8px 12px;
+            background: orangered;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .edit-btn:hover {
+            background: #c82333;
+
+        }
+        .editStdtName-btn {
+            padding: 8px 12px;
+            background: darkblue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .editStdtName-btn:hover {
+            background: lightblue;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+        li:hover {
+            background: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <h1>Javascript Student List</h1>
+    <div id="container">
+        <ul id="studentList"></ul>
+        <input type="text" placeholder="Enter student name" id="studentName">
+        <input type="text" placeholder="Enter Grades (comma seperated)" id="studentGrade">
+        <button class="add-button"onclick="addStudentHandler()">Add Student</button>
+    </div>
+
+    <h1>Info</h1>
+    <h1 id="studentsCount"></h1>
+    <h1 id="studentsGrades"></h1>
+    <h1 id="studentTotal"></h1>
+
+    <script>
+
+
+        const students = {
+            Alice: [85, 90, 78],
+            Bob: [92, 88, 79],
+            Charlie: [84, 85, 91],
+            Adam: [1, 2, 3]
+        };
+
+        function addStudent(studentName, studentGrades) {
+            if (students[studentName]) {
+                alert(`${studentName} already exists`);
+            } else {
+                students[studentName] = studentGrades;
+            }
+        }
+
+        function renderStudents(){
+            const studentList = document.getElementById("studentList")
+            studentList.innerHTML = "";
+            
+            for(let student in students){
+                const li = document.createElement("li")
+                 let sum = 0            
+                for (let i in students[student]){
+                    sum += parseInt(students[student][i])
+                }
+                console.log(students[student]) 
+                li.textContent = `${student}: ${students[student].join(", ")} Total(${sum})`
+                const removeBtn = document.createElement("button")
+                removeBtn.textContent = "Remove Student";
+                removeBtn.className = "remove-btn"
+                removeBtn.onclick = function(){
+                    if(confirm(`Are you sure you want to remove ${student}`)){
+                        delete students[student]
+                        renderStudents()
+                         // totalStudentsCount()
+                    }
+                }
+                li.appendChild(removeBtn)
+
+                const editBtn = document.createElement("button")
+                editBtn.textContent = "Edit Grades"
+                editBtn.className = "edit-btn"
+                editBtn.onclick = function() {
+                    editStudentGrades(student)
+                    renderStudents()
+                }
+
+                li.appendChild(editBtn)
+
+                const editStdtBtn = document.createElement("button")
+                editStdtBtn.textContent = "Edit Students"
+                editStdtBtn.className = "editStdtName-btn"
+                editStdtBtn.onclick = function() {
+                   editStudentName(student)
+                }
+
+                li.appendChild(editStdtBtn)
+                
+
+                studentList.appendChild(li)
+
+
+            }
+
+            // you can call a function, from another function
+            // here renderStudents is calling totalStudentsCount()
+             totalStudentsCount()
+             totalGrades()
+          
+        }
+
+        function addStudentHandler(){
+            const studentNameInput = document.getElementById("studentName")
+            const studentGradeInput = document.getElementById("studentGrade")
+            const studentGrades = studentGradeInput.value.split(",")
+            if(studentNameInput.value && studentGradeInput.value){
+                addStudent(studentNameInput.value, studentGrades)
+                renderStudents()
+                 // totalStudentsCount()
+                studentNameInput.value = ""
+                studentGradeInput.value = ""
+            }else{
+                alert("Please enter a student name, with at least one grade")
+            }
+        }
+
+        function totalStudentsCount(){
+            let count = 0;
+
+            for(const student in students){
+                count++
+            }
+
+            // alert(count)
+            const studentsCount = document.getElementById("studentsCount")
+            studentsCount.textContent = `Students Count : ${count}`
+        }
+
+        function totalGrades(){
+            let total = 0;
+
+            // will loop through the students
+            // to extract the array of grades for each student
+            for(const student in students){
+                // [1,2,3] = 6
+                // [1,2,3] = 12
+                let grades = students[student]
+                // alert(students[student])
+
+
+
+                // student =  Alice
+                // (students[student] or grades) = [1,2,3]
+
+                //nested loop
+                // this will loop through each item of the array of grades
+                for(let grade of grades){
+
+                    total += parseInt(grade)
+                }
+
+            }
+
+
+            // alert(total)
+            const studentsGrades = document.getElementById("studentsGrades")
+            studentsGrades.textContent = `Total Grades : ${total}`
+
+        }
+
+        function editStudentGrades(studentName) {
+            const newGrades = prompt(`Enter new grades for ${studentName}. (comma-seperated)`, students[studentName].join(", "))
+
+            if (newGrades){
+                const updatedGrades = newGrades.split(", ")
+
+                if(updatedGrades.length > 0){
+                    students[studentName] = updatedGrades
+                    renderStudents()
+                }
+            }else{
+                alert("Invalid Grades entered")
+            }
+        }
+
+
+        function editStudentName(studentName) {
+            const newName = prompt(`Enter new name for ${studentName}.`,) 
+
+            students[newName] = students[studentName]
+
+            delete students[studentName]
+
+            renderStudents()
+            
+            
+        }
+
+
+        renderStudents()
+
+
+    </script>
+</body>
+</html>

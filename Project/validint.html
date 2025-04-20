@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .valid {
+            color: green;
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Validator</h1>
+        <p>Enter your age to validate it.</p>
+        <button onclick="checkAge()">Check Age</button>
+        <p id="result"></p>
+    </div>
+
+<script>
+        function validateAge(age) {
+            // will validate age with logic custom rules that we set
+            // we going to use the `throw` statement to apply those strict rules
+
+            // i will check if age is not NaN
+            // NaN - > Not-A-Number
+
+
+            try{
+
+
+                    // this will check if age === NaN
+                if(isNaN(age)){
+                    throw new Error("Age must be a number!");
+                }
+                else if (age < 0) {
+                    throw new Error("Age cannot be negative!");
+                }
+                else if (age > 120) {
+                    throw new Error("Age cannot exceed 120!");
+                }
+
+
+                return `Valid age: ${age}`;
+
+            }catch(error){
+                return `Error: ${error.message}`;
+            }
+
+        }
+
+
+
+
+        function checkAge() {
+
+            // 1 - take value from user using prompt
+            // 2 - convert value from string to int
+            // 3 - run the validateAge()
+            // 4 - display result on the p
+            // 5 - add the correct css class on our p
+            
+            const userInput = prompt("Please enter your age:");
+            const age = parseFloat(userInput); // Convert input to a number
+
+            console.log(age)
+
+
+            const result = validateAge(age);
+
+
+            // alert(result)
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = result;
+
+
+            if(result.startsWith("Valid")){
+                resultElement.className = "valid"
+            }else{
+                resultElement.className = "error"
+            }
+            
+            
+
+        }
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+		function biggest(num1, num2){
+			return num1 > num2 ? num1 : num2
+		}
+
+		let finalresult = biggest(parseInt(prompt("What is your fist number?")), parseInt(prompt("What is the second number?")))
+
+		alert(`The biggest number is :${finalresult}`)
+
+		function toSeconds(minute){
+			let result = minute * 60
+			return result
+		}
+
+		let finalresult1 = toSeconds(parseInt(prompt("How many minute do u need to convert?")))
+
+		alert(`${finalresult1}seconds`)
+
+		function positifOrNegetive(num3){
+			
+			let result = num3 > 0 ? "is positif" 
+						: num3 < 0 ? "is negetive"
+						: " is zero "
+			return result 
+			
+		}
+
+		let finalresult2 = positifOrNegetive(parseInt(prompt("What is the number?")))
+
+		alert(`The Answer is: ${finalresult2}`)
+
+
+		function weird(num4, num5){
+			return num4 < num5 ? "-1" 
+				  :num4 > num5 ? "1" 
+				  : "0"
+		}
+
+		let finalresult3 = weird(parseInt(prompt("What is the first number")), parseInt(prompt("what is the second number?")))
+
+		alert(`The answer is : ${finalresult3}`)
+
+
+		function toStr(d1, d2, d3){
+			let result = d1.toString() + d2.toString() + d3.toString()
+			return result
+		}
+
+		let finalresult5 = toStr(parseInt(prompt("What is the first digit?")), parseInt(prompt("What is the second digit?")), parseInt(prompt("What is the third digit?")))
+
+		alert(`final answer: ${finalresult5}`)
+
+
+		function factorial(num6){
+			let fact = num6 < 0 ? -1 
+				  : num6 == 0 ? 1
+				  : num * factorial(num6 - 1)
+
+			return fact
+
+		}
+
+		let finalresult4 = factorial(parseInt(prompt("what's the number u want to factorialize?")))
+		alert(` the answer is :${finalresult4}`)
+	</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+		function fistLetter(str){
+
+			let fistLetter =  str[0]
+			return fistLetter
+
+		}
+
+		let finalresult = fistLetter(prompt("which word do u need?"))
+		alert(`The First latter is :"${finalresult}"`)
+
+
+		function lastLetter(str){
+			let lastLetter = str.slice(-1)
+			return lastLetter
+		}
+
+		let finalresult1 = lastLetter(prompt("which word do u need?"))
+
+		alert(`The last letter is : "${finalresult1}" `)
+
+		function isThere(str, word){
+			let isThere = str.includes(word)
+			return isThere
+		}
+
+		let finalresult2 = isThere(prompt("What is the sentence?"), prompt("What are u looking for?"))
+
+		alert(`the word u looking for at :"${finalresult2}"`)
+
+		function hyphen(str){
+			let hyphen = str.replace(/ /g, "-")
+			return hyphen
+		}
+
+		let finalresult3 = hyphen(prompt("What is the sentence?"))
+
+		alert(`${finalresult3}`)
+	</script>
+</body>
+</html>

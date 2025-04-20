@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background:black;
+            text-align: center;
+            margin: 10px;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: yellowgreen;
+        }
+
+        #container {
+            padding:6px;
+            border:3px solid yellowgreen;
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            background: #83f7cd;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: white;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input {
+            padding: 3px;
+            width: 95%;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin: 3px auto;
+            border:1px solid yellowgreen;
+        }
+
+
+        
+        .add-button {
+            padding: 8px 12px;
+            background: #12543c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .add-button:hover {
+            background: #218838;
+        }
+
+        .search-button {
+            padding: 8px 12px;
+            background: #12543c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+        .search-button:hover {
+            background: #218838;
+        }
+
+        .remove-btn, .edit-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: yellowgreen;
+            font-size: 16px;
+            display: block;
+            margin-block: 0;
+        }
+
+
+        .online {
+            border:2px solid green;
+            background-color: #d4edda;
+        }
+        select {
+            padding: 3px;
+            width: 95%;
+            height: 26px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin: 3px auto;
+            border:1px solid yellowgreen;
+        }
+
+        .rank-peasant {
+            color: #0070dd;
+        }
+
+        .rank-knight {
+            color: #a335ee;
+        }
+
+        .rank-officer {
+            color: #ff8000;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Guild Member List</h1>
+    <div id="container">
+        <ul id="memberList">
+            
+        </ul>
+        <label for="memberInput">Guild Member</label>
+        <input type="text" placeholder="Enter a User Id" id="memberInput">
+        <input type="text" placeholder="Enter a Class" id="classInput">
+        <input type="text" placeholder="Enter a Level" id="levelInput">
+        <label for="rankInput">Rank</label>
+        <select id="rankInput">
+            <option value="">Please Select</option>
+            <option value="peasant">Peasant</option>
+            <option value="knight">Knight</option>
+            <option value="officer">Officer</option>
+        </select>
+        <button class="add-button" onclick="addGuildMember()">Add Member</button>
+        <input type="text" placeholder="Search for.." id="searchInput">
+        <button class="search-button" onclick="searchMember()">Search</button>
+    </div>
+
+        
+    <script>
+
+        let guild = []
+
+            console.log(guild)
+            function renderGuildMember(searchTxt=""){
+                saveGuildToLocalStorage()
+                const memberList = document.getElementById("memberList");
+                memberList.innerHTML = "";
+
+                let guildList = []
+                    if(searchTxt !== ""){
+                        guildList = guild.filter(function(member){
+                            return member.ID.toLowerCase().includes(searchTxt) ||
+                                   member.class.toLowerCase().includes(searchTxt) ||
+                                   member.level.toString().includes(searchTxt)
+                        })
+                    } else {
+                        guildList = guild
+                    }
+
+                // for (let task of tasks) {
+                for (let i = 0; i < guildList.length; i++) {
+                    const member = guildList[i]
+                    const li = document.createElement("li");
+
+                            if(member.rank === "officer"){
+                                 li.classList.add("rank-officer")
+                             } else if(member.rank === "knight"){
+                                 li.classList.add("rank-knight")
+                             }else if(member.rank === "peasant"){
+                                li.classList.add("rank-peasant")
+                             }
+
+                    const textContainer = document.createElement("span")
+                    textContainer.textContent = `ID: ${member.ID}   Class: ${member.class} level: ${member.level}`;
+                    
+                    const buttonContainer = document.createElement("div")
+                    buttonContainer.style.display = "flex";
+                    buttonContainer.style.gap ="10px"
+                        
+
+
+                    const editBtn = document.createElement("button")
+                    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>'
+                    editBtn.classList.add("edit-btn")
+                    editBtn.title = "Edit member details"
+                    editBtn.onclick = function(){
+                        editMember(i)
+                    }
+                
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.innerHTML = '<i class="fa-solid fa-trash"></i>'
+                    removeBtn.classList.add("remove-btn");
+                    removeBtn.title = "Remove member from the guild"
+                    removeBtn.onclick = function(){
+                        removeMember(i)
+                    }
+
+                buttonContainer.appendChild(editBtn)
+                buttonContainer.appendChild(removeBtn)
+                li.appendChild(textContainer)
+                li.appendChild(buttonContainer)
+
+                if(member.online === true){
+                    li.classList.add("online")
+                }
+                li.onclick = function(){
+                    toggleOnline(member)
+                }
+
+                memberList.appendChild(li);
+                }}
+
+            function addGuildMember(){
+                const memberInput = document.getElementById("memberInput")
+                const classInput = document.getElementById("classInput")
+                const levelInput = document.getElementById("levelInput")
+                const rankInput = document.getElementById("rankInput")
+                const memberInputValue = memberInput.value.charAt(0).toUpperCase() + memberInput.value.slice(1)
+                const classInputValue = classInput.value.charAt(0).toUpperCase() + classInput.value.slice(1).toLowerCase()
+                const levelInputValue = parseInt(levelInput.value)
+                console.log(rankInput)
+                const rankInputValue = rankInput.value
+                if (memberInputValue  && classInputValue && levelInputValue ){
+                   guild.push({ID : memberInputValue, class: classInputValue, level: levelInputValue, online: false, rank: rankInputValue})
+                    renderGuildMember()
+                    
+
+                 } else {
+                    alert("Please enter a valid Id, Class & Level!")
+                    }
+
+                    memberInput.value = "";
+                    classInput.value = "";
+                    levelInput.value = "";
+                    document.getElementById("searchInput").value = "";
+                }
+
+
+
+            function removeMember(index) {
+                guild.splice(index, 1)
+                saveGuildToLocalStorage()
+                renderGuildMember()
+                }
+
+            function editMember(index) {
+                let idInput = prompt(`Please Enter player ID to replace ${guild[index].ID}`)
+
+                idInput = idInput.charAt(0).toUpperCase() + idInput.slice(1)
+                let classInput = prompt(`Please Enter player class to replace ${guild[index].class}`)
+                classInput = classInput.charAt(0).toUpperCase() + classInput.slice(1).toLowerCase()
+                const levelInput = parseInt(prompt(`Please Enter player ID to replace ${guild[index].level}`))
+                let rankInput = prompt('Please state the rank (peasant/knight/officer)')
+                rankInput = rankInput.toLowerCase()
+                if(idInput && classInput && levelInput){
+                    guild[index] = {ID : idInput, class: classInput, level: levelInput, online : false, rank: rankInput}
+                    saveGuildToLocalStorage()
+                    renderGuildMember()
+                } else {
+                    alert("Please enter a valid Id, Class & Level!")
+                }}
+
+            function toggleOnline(member){
+                member.online = !member.online
+                saveGuildToLocalStorage()
+                renderGuildMember()
+            }
+
+            function searchMember() {
+                const searchInputValue = document.getElementById("searchInput").value.toLowerCase()
+                renderGuildMember(searchTxt=searchInputValue)
+                document.getElementById("searchInput").value = ""
+            }
+            
+
+            function saveGuildToLocalStorage() {
+                localStorage.setItem("guild", JSON.stringify(guild))
+            }
+
+
+            function loadGuildFromLocalStorage() {
+                const storedGuild = localStorage.getItem("guild")
+                 guild = storedGuild ? JSON.parse(storedGuild) : []
+
+            }
+
+            
+            loadGuildFromLocalStorage()
+            renderGuildMember()
+
+ 
+    </script>
+</body>
+</html>

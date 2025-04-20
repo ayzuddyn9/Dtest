@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+	* {
+		padding: 0px;
+		margin:0px;
+	}
+
+	h1 {
+		text-align: center;
+		font: italic;
+		margin-bottom: 20px;
+	}
+
+	table {
+		margin-left: auto;
+		margin-right: auto;
+		border-collapse: collapse;
+		background-color: #ffffff;
+	}
+
+	tr {
+		text-align: center;
+	}
+
+	th {
+		background-color: blue;
+		color: whitesmoke;
+		margin-left: 25px;
+		margin-right: 25px;
+		padding: 25px;
+		border: 1px solid #ddd;
+	}
+
+	td {
+		text-align: center;
+		margin: 25px;
+		padding: 25px;
+	}
+
+	tr:nth-child(even) {
+		background-color: lightblue;
+	}
+
+	tr:hover {
+		background-color: grey;
+	}
+
+
+
+	
+	</style>
+</head>
+<body>
+	<h1>Flight Schedule</h1>
+	<table>
+		<tr>
+			<th>Destination</th>
+			<th>Flight #</th>
+			<th>Departure Time</th>
+			<th>Arrival Time</th>
+			<th>Remark</th>
+		</tr>
+		<tr>
+			<td rowspan="2">New York</td>
+			<td>101</td>
+			<td>9:00 AM</td>
+			<td>12:00 PM</td>
+			<td>On Time</td>
+		</tr>
+		<tr>
+			<td>102</td>
+			<td>2:00 PM</td>
+			<td>5:00 PM</td>
+			<td>Delayed</td>
+		</tr>
+		<tr>
+			<td rowspan="2">Los Angeles</td>
+			<td>201</td>
+			<td>8:00 AM</td>
+			<td>11:00 AM</td>
+			<td>On Time</td>
+		</tr>
+		<tr>
+			<td>201</td>
+			<td>8:00 AM</td>
+			<td>11:00 AM</td>
+			<td>Cancelled</td>
+		</tr>
+	</table>
+
+
+</body>
+</html>

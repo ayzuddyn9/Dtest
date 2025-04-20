@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			text-align: center;
+			background-color: black;
+			color: whitesmoke;
+		}
+
+		.f-left {
+			float: left;
+			width: 50%;
+			width: 100px;
+		}
+
+		.f-right {
+			text-align: right;
+			float:right;
+			width: 50%;
+		}
+
+		.clearfix {
+			overflow: auto;
+		}
+/*		.clearfix::after {
+			content: "";
+			clear: both;
+			display: table;
+		}*/
+
+		.clear {
+			clear: both;
+		}
+
+		.main {
+			margin: 30px;
+			border-style: double;
+		}
+
+		.main img {
+			width: 450px;
+			margin: 15px;
+			
+		}
+
+		
+	</style>
+</head>
+<body>
+	<h1>Amazing pixel</h1>
+
+
+	<div class="clearfix">
+		<img src="image/600.jpg" class="f-left">
+	
+	    <p class="f-right">Downloaded over a Millions times!!</p>
+	</div>
+	
+	<div class="main clearfix">
+		<img src="image/600.jpg" class="f-left">
+		<h2>Ultimate pixel PIC</h2>
+		<p>this is the old pixel </p>
+		<p class="get">Get now</p>
+	</div>
+</body>
+</html>

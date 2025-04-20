@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+		function onTime(destination, hours){
+			let speed = destination / hours 
+			let s = speed.toFixed(2)
+			return s
+		}
+
+		let finalResult = onTime(parseInt(prompt("How far is the distance?(in km)")), parseInt(prompt("how many hours do u like to take to arrive?(in hours)")))
+
+		alert(`The speed u need to be at: ${finalResult}km/hours`)
+
+		const EUR = 0.95
+
+		function convertToEUR(dollar){
+			let convert = dollar * EUR
+			let c = Math.floor(convert)
+			return c
+		}
+
+		let finalResult1 = convertToEUR(parseInt(prompt("How much USdollar do u want to convert to EUR?")))
+
+		alert(`the exchange rate is: ${EUR}\n U will get : ${finalResult1}EUR`)
+
+		function howMany(wallet , price){
+			let choc = wallet / price
+			let c = Math.floor(choc)
+			return c
+		}
+
+		let finalResult2 = howMany(parseInt(prompt("How much money do u have?")), parseInt(prompt("How much is the choc?")))
+
+		alert(`U can u get ${finalResult2} with the amount of money`)
+
+		function checkOddOrEven(integer){
+			return Math.floor(integer) % 2 == 0 ? "Even" : "Odd" 
+		}
+
+		let finalResult3 = checkOddOrEven(parseInt(prompt("What is the number?")))
+
+		alert(`The even number is: ${finalResult3}`)
+
+		function 
+
+	</script>
+</body>
+</html>

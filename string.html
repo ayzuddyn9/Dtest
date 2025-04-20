@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+		function firstName(fullName){
+
+			
+			let firstName = fullName.split(" ")[0]
+
+			return firstName
+		 }
+
+		let result = firstName(prompt("What is your full name?"))
+
+		alert(result)	
+
+		function capLatter(fullWord){
+			let capLatter = fullWord[0].toUpperCase()
+			let result = capLatter + fullWord.slice(1 , fullWord.length)	
+
+			return result
+		}
+
+		let result1 = capLatter(prompt("What is your full word?"))
+
+		alert(result1)
+
+		function checkWord(sentence, word){
+			let checkWord = sentence.includes(word)
+
+			return checkWord
+		}
+
+		let result2 = checkWord(prompt("what is the sentence?"), prompt("what the word u looking?"))
+
+		alert(result2)
+
+
+		function maskString(str){
+			let star = "*".repeat(str.length / 2)
+			let half = str.slice(str.length / 2, str.length)
+			return star + half
+		}
+
+		
+		let result3 = maskString(prompt("what is the password?"))
+
+		alert(result3)
+
+
+		function biggest(num1, num2, num3){
+			return num1 > num2 && num1 > num3 ? num1 
+				: num2 > num1 && num2 > num3 ? num2
+				: num3 > num1 && num3 > num2 ? num3 
+				:  "number is invalid"
+		}
+
+		let result4 = biggest(parseInt(prompt("What is the num1?")), parseInt(prompt("What is the num2?")),parseInt(prompt("What is the num3?")))
+
+		alert(result4)
+
+	</script>
+</body>
+</html>

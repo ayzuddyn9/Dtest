@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Headings</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #container {
+            background: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 8px;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block;
+            margin: 10px auto;
+        }
+
+         .add-button {
+            padding: 8px 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+        }
+
+        .add-button:hover {
+            background: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: white;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: red;
+            font-size: 16px;
+        }
+
+        .editTask-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: red;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+        <h1>To-Do List</h1>
+        <div id="container">
+            <ul id="taskList"></ul>
+            <input type="text" placeholder="Enter a new task" id="taskInput">
+            <button class="add-button" onclick="addTask()">Add Task</button>
+        </div>
+        <h1>Info</h1>
+        <p id="taskCount"></p>
+        <script>
+            const tasks = [
+                { name: "Learn HTML", completed: false },
+                { name: "Learn CSS", completed: false },
+                // {}
+            ];
+
+
+        // tasks.length -> 2
+
+            function renderTasks() {
+                const taskList = document.getElementById("taskList");
+                taskList.innerHTML = "";
+
+                // for (let task of tasks) {
+                for (let i = 0; i < tasks.length; i++) {
+                    const task = tasks[i]
+                    const li = document.createElement("li");
+                    li.textContent = task.name;
+
+                    if (task.completed === true) {
+                        li.classList.add("completed");
+                    }
+
+                    li.onclick = function() {
+                        toggleTasks(task);
+                    };
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    removeBtn.classList.add("remove-btn");
+                    removeBtn.onclick = function() {
+                        removeTask(i);
+                    };
+                    li.appendChild(removeBtn);
+
+                    const editTaskBtn = document.createElement("button")
+                    editTaskBtn.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>`
+                    editTaskBtn.classList.add("editTask-btn")
+                    editTaskBtn.onclick = function() {
+                       console.log(i)
+                       console.log(tasks[i])
+                       editTask(i)
+                    }
+
+                    li.appendChild(editTaskBtn)
+
+                    taskList.appendChild(li);
+                }
+                totalTask()
+            }
+
+            function toggleTasks(task) {
+                // task.completed -> true (!task.completed = false)
+                task.completed = !task.completed;
+                renderTasks();
+            }
+
+            function addTask() {
+                const taskInput = document.getElementById("taskInput");
+                const taskInputValue = taskInput.value;
+                if (taskInputValue) {
+                    tasks.push({ name: taskInputValue, completed: false });
+                    renderTasks();
+                } else {
+                    alert("Please enter a valid task!");
+                }
+
+                taskInput.value = "";
+            }
+
+            function removeTask(index){
+                tasks.splice(index, 1)
+                renderTasks();
+            }
+
+            // alert(tasks.indexOf({ name: "Learn HTML", completed: false })
+        // )
+
+            function totalTask(){
+                    let count = 0;
+
+                    for(const task in tasks){
+                        count++
+                    }
+
+                    // alert(count)
+                    const taskCount = document.getElementById("taskCount")
+                    taskCount.textContent = `Tasks count : ${count}`
+                }
+
+            function editTask(index){
+                console.log(index)
+                const editInput = prompt(`Enter new task to replace index ${tasks[index]} ?`);
+                console.log(editInput)
+
+                if (editInput) {
+                    tasks.push({ name: editInput, completed: false })
+                    removeTask()
+                } else {
+                    alert("Please enter a valid task!");
+                }
+                
+                
+            }
+
+            renderTasks();
+
+
+</script>
+</body>
+</html>
