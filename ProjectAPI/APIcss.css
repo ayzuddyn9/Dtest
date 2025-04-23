@@ -19,7 +19,7 @@ h1 {
 }
 
 .container {
-    margin: auto;
+    margin: 10px auto;
     padding: 10px;
     border: 3px solid rgb(209, 228, 43);
     max-width: 500px;
@@ -32,13 +32,13 @@ h1 {
 .cardContent {
     display: flex;
     align-items: center;
-    gap: 15px;
 }
 
 .cityImage {
   max-width: 30px;
   border-radius: 10px;
   object-fit: cover;
+  overflow: none;
 }
 
 .cityInfo {
@@ -64,9 +64,9 @@ h1 {
 }
 
 .weatherIcon img {
-    width: 50px;
-    height: 50px;
-    margin: 5px 0;
+    width: 25px;
+    height: 25px;
+    margin: 0
 }
 
 
@@ -86,6 +86,7 @@ input {
 }
 
 #searchButton {
+
     padding: 8px 15px;
     margin: 10px auto;
     width: 95%;

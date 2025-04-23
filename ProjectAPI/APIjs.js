@@ -1,3 +1,9 @@
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+
 function getWeatherData(city) {
     const weatherKey = "6fe17d78e8fb781705d804097c5148f3"
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&units=metric`
@@ -9,7 +15,7 @@ function getWeatherData(city) {
         return {
           icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
           description: data.weather[0].description,
-          temperature: data.main.temp,
+          temperature: Math.round(data.main.temp),
           country: data.sys.country
         };
       });
@@ -25,7 +31,7 @@ function getCityImage(city) {
       .then(response => response.json())
       .then(data => {
         const photo = data.photos && data.photos[0]
-        return photo ? photo.src.medium : null
+        return photo.src.small || null
       })
 }
 
@@ -36,16 +42,19 @@ function getFlagUrl(countryCode) {
 function getCityDescription(city) {
     const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${city}`;
   
-    return fetch(wikiUrl)
+   return fetch(wikiUrl)
       .then(response => {
         if (!response.ok) throw new Error("Wikipedia data not found");
         return response.json();
       })
       .then(data => {
 
-        return data.extract ? data.extract : "No description available from Wikipedia.";
+        return data.extract || "No description available from Wikipedia.";
       });
 }
+
+
+
 
 document.getElementById("searchButton").addEventListener("click", () => {
     const city = document.getElementById("searchInput").value.trim()
@@ -53,7 +62,9 @@ document.getElementById("searchButton").addEventListener("click", () => {
       alert("Please enter a city name")
       return
     }
-  
+    
+    const capital = capitalizeFirstLetter(city)
+
     getWeatherData(city)
       .then(weather => {
         const flagUrl = getFlagUrl(weather.country)
@@ -73,14 +84,14 @@ document.getElementById("searchButton").addEventListener("click", () => {
             <img src="${imageUrl}" alt="City  Image" class="city-image">
             <div class="cityInfo">
               <div class="cityHeader">
-                <h2 class="cityName">${city}</h2>
+                <h2 class="cityName">${capital}</h2>
                 <img src="${flagUrl}" alt="Flag" class="city-flag">
               </div>
               <div class="weatherIcon">
                 <img src="${weather.icon}" alt="Weather Icon">
               </div>
               <p class="cityDescription">
-                ${data.extract}, ${weather.temperature}°C
+                ${weather.description}, ${weather.temperature}°C
               </p>
             </div>
           </div>

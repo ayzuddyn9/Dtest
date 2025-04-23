@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="singleAPI.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Simple data review</h1>
+        <div>
+            <select id="dataType">
+                <option value="post">Post</option>
+                <option value="comment">comment</option>
+                <option value="users">user</option>
+            </select>
+            
+            <button onclick="getData()"></button>
+            <button onclick="clearData()"></button>
+        </div>
+
+        <div id="error"></div>
+        <div id="dataContainer"></div>
+        <script src="singleAPI.js" >
+        </script>
+    </body>
+</html>
